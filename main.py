@@ -15,11 +15,11 @@ logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 #%%
 # Initial clean for following parsing work
 clean.clean_file(
-    input_path= Path(
-global_options.DATA_FOLDER, "Input", "documents.txt"
+    input_path=Path(
+        global_options.DATA_FOLDER, "Input", "documents.txt"
     ),
-    output_path= Path(
-global_options.DATA_FOLDER, "Processed", "cleaned", "documents.txt"
+    output_path=Path(
+        global_options.DATA_FOLDER, "Processed", "cleaned", "documents.txt"
     ),
     to_lower=True,
     remove_punc=True,
@@ -27,28 +27,28 @@ global_options.DATA_FOLDER, "Processed", "cleaned", "documents.txt"
 #%%
 # Parsing
 parse.parse_document(
-        input_path=Path(
-            global_options.DATA_FOLDER, "Processed", "cleaned", "documents.txt"
-        ),
-        input_id=file_process.file_to_list(Path(
-            global_options.DATA_FOLDER, "Input", "document_ids.txt"
-        )),
-        output_path=Path(
-            global_options.DATA_FOLDER, "processed", "parsed", "documents.txt"
-        ),
-        output_id=Path(
-            global_options.DATA_FOLDER, "processed", "parsed", "document_sent_ids.txt"
-        ),
-        lemma=True
-    )
+    input_path=Path(
+        global_options.DATA_FOLDER, "Processed", "cleaned", "documents.txt"
+    ),
+    input_id=file_process.file_to_list(Path(
+        global_options.DATA_FOLDER, "Input", "document_ids.txt"
+    )),
+    output_path=Path(
+        global_options.DATA_FOLDER, "processed", "parsed", "documents.txt"
+    ),
+    output_id=Path(
+        global_options.DATA_FOLDER, "processed", "parsed", "document_sent_ids.txt"
+    ),
+    lemma=True
+)
 #%%
 # Final clean(e.g. remove punctuation and ner/pos tags)
 clean.clean_file(
-    input_path= Path(
-global_options.DATA_FOLDER, "processed", "parsed", "documents.txt"
+    input_path=Path(
+        global_options.DATA_FOLDER, "processed", "parsed", "documents.txt"
     ),
-    output_path= Path(
-global_options.DATA_FOLDER, "Processed", "unigram", "documents.txt"
+    output_path=Path(
+        global_options.DATA_FOLDER, "Processed", "unigram", "documents.txt"
     ),
     to_lower=True,
     remove_num=True,
@@ -121,12 +121,12 @@ train_models_untils.train_w2v_model(
     sg=global_options.W2V_SKIP
 )
 #%%
-# expand the seed words to dictionary using trained w2v model
+# expand the seed words to dictionary using trained w2v model, re-run this code if seed words in global.py are expanded.
 print(datetime.datetime.now())
 print("Expanding dictionary...")
 creat_dict(
     input_path=Path(global_options.MODEL_FOLDER, "w2v", "w2v.mod"),
-    output_path = Path(global_options.OUTPUT_FOLDER, "dict", "expanded_dict.csv")
+    output_path=Path(global_options.OUTPUT_FOLDER, "dict", "expanded_dict.csv")
 )
 #%%
 # scoring the remarks based on term frequency(or TFIDF, WFIDF...)

@@ -43,7 +43,7 @@ def creat_dict(input_path, output_path):
 
     # Save the expanded dictionary to a CSV file
     dictionary.write_dict_to_csv(
-        culture_dict=expanded_words,
+        dict=expanded_words,
         file_name=output_path,
     )
     print("Dictionary saved at {}".format(output_path))

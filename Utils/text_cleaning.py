@@ -92,7 +92,7 @@ class TextCleaner:
         Returns:
             str: Text with punctuation removed.
         """
-        return re.sub(r'[^\w\s]', '', text)
+        return re.sub(r'[^\w\s]', ' ', text)
 
     def _remove_extra_punctuation(self, text):
         """
@@ -161,7 +161,6 @@ class TextCleaner:
             text = self._to_lower(text)
         if self.remove_num:
             text = self._remove_numbers(text)
-        # 先执行 extra punctuation 的简单清洗，便于后续解析
         if self.remove_extra_punc:
             text = self._remove_extra_punctuation(text)
         if self.remove_punc:

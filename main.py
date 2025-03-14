@@ -133,7 +133,7 @@ creat_dict(
 print(datetime.datetime.now())
 print("Scoring samples...")
 run_scoring_pipeline(
-    dict_path=Path(global_options.OUTPUT_FOLDER, "dict", "sorted_dict.csv"),
+    dict_path=Path(global_options.OUTPUT_FOLDER, "dict", "filtered_dict.csv"),
     corpus_path=Path(global_options.DATA_FOLDER, "processed", "trigram", "documents.txt"),
     id_path=Path(global_options.DATA_FOLDER, "processed", "parsed", "document_sent_ids.txt"),
     methods=['TF']

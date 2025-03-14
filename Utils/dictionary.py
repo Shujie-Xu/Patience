@@ -98,14 +98,14 @@ def rank_by_sim(expanded_words, seed_words, model) -> "dict[str: list]":
     return expanded_words_sorted
 
 
-def write_dict_to_csv(culture_dict, file_name):
+def write_dict_to_csv(dict, file_name):
     """write the expanded dictionary to a csv file, each dimension is a column, the header includes dimension names
     
     Arguments:
-        culture_dict {dict[str, list[str]]} -- an expanded dictionary {dimension: [words]}
+        dict {dict[str, list[str]]} -- an expanded dictionary {dimension: [words]}
         file_name {str} -- where to save the csv file?
     """
-    pd.DataFrame.from_dict(culture_dict, orient="index").transpose().to_csv(file_name, index=None)
+    pd.DataFrame.from_dict(dict, orient="index").transpose().to_csv(file_name, index=None)
 
 
 def read_dict_from_csv(file_name):
@@ -115,23 +115,23 @@ def read_dict_from_csv(file_name):
         file_name {str} -- expanded dictionary file
     
     Returns:
-        culture_dict {dict{str: set(str)}} -- a culture dict, dim name as key, set of expanded words as value
+        dict {dict{str: set(str)}} -- a culture dict, dim name as key, set of expanded words as value
         all_dict_words {set(str)} -- a set of all words in the dict
     """
     print("Importing dict: {}".format(file_name))
-    culture_dict_df = pd.read_csv(file_name, index_col=None)
-    culture_dict = culture_dict_df.to_dict("list")
-    for k in culture_dict.keys():
-        culture_dict[k] = set([x for x in culture_dict[k] if x == x])  # remove nan
+    dict_df = pd.read_csv(file_name, index_col=None)
+    dict = dict_df.to_dict("list")
+    for k in dict.keys():
+        dict[k] = set([x for x in dict[k] if x == x])  # remove nan
 
     all_dict_words = set()
-    for key in culture_dict:
-        all_dict_words |= culture_dict[key]
+    for key in dict:
+        all_dict_words |= dict[key]
 
-    for dim in culture_dict.keys():
-        print("Number of words in {} dimension: {}".format(dim, len(culture_dict[dim])))
+    for dim in dict.keys():
+        print("Number of words in {} dimension: {}".format(dim, len(dict[dim])))
 
-    return culture_dict, all_dict_words
+    return dict, all_dict_words
 
 
 def deduplicate_keywords(word2vec_model, expanded_words, seed_words):
@@ -347,12 +347,12 @@ def compute_word_sim_weights(file_name):
     Returns:
         sim_weights {{word:weight}} -- a dictionary of word weights
     """
-    culture_dict_df = pd.read_csv(file_name, index_col=None)
-    culture_dict = culture_dict_df.to_dict("list")
+    dict_df = pd.read_csv(file_name, index_col=None)
+    dict = dict_df.to_dict("list")
     sim_weights = {}
-    for k in culture_dict.keys():
-        culture_dict[k] = [x for x in culture_dict[k] if x == x]  # remove nan
-    for key in culture_dict:
-        for i, w in enumerate(culture_dict[key]):
+    for k in dict.keys():
+        dict[k] = [x for x in dict[k] if x == x]  # remove nan
+    for key in dict:
+        for i, w in enumerate(dict[key]):
             sim_weights[w] = 1 / math.log(1 + 1 + i)
     return sim_weights
